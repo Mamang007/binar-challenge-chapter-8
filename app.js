@@ -3,7 +3,7 @@ const app = express()
 const cors = require('cors')
 const apiRouter = require('./server/routes')
 const errorHandler = require('./server/middlewares/errorHandler')
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 4000;
 
 // middlewares
 app.use(cors())
@@ -15,8 +15,13 @@ app.use(errorHandler)
  * @Routes /api
  * entrypoint for all API routes
  */
-app.use("/api", apiRouter)
+app.use("/api", apiRouter);
+
+//SWAGGER
+const swaggerJSON = require("./swagger.json");
+const swaggerUI = require("swagger-ui-express");
+app.use("/", swaggerUI.serve, swaggerUI.setup(swaggerJSON));
 
 app.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`)
-})
+});
